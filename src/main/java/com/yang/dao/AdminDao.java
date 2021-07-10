@@ -18,7 +18,5 @@ public interface AdminDao {
      * @param new_password  更改的新密码
      * @return
      */
-
-
     int updatePd(@Param("aname") String admin_name, @Param("newPd") String new_password);
 }

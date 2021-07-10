@@ -9,7 +9,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class ForgetPassWord extends Dialog {
+public class  ForgetPassWord extends Dialog {
 
 
     JLabel  lName,  lPasswd, lConPasswd;

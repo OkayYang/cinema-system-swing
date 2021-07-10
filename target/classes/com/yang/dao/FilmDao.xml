@@ -19,6 +19,10 @@ select * from film
         insert into film(fname,ftype,fregion,fduration,fdate,fprice)
         values (#{fName},#{fType},#{fRegion},#{fDuration},#{fDate},#{fPrice})
     </insert>
+    <select id="findFilm" resultType="Film">
+        select * from film where fname = #{fname}
+    </select>
+
 
 
 </mapper>

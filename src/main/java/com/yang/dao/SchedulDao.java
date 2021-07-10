@@ -9,4 +9,5 @@ public interface SchedulDao {
     List<Schedul_infor> selectAllScheduls();
     int addSchedul(Schedul schedul);
     int updateStock(int sid);
+    int deletesSchedul(int sid);
 }

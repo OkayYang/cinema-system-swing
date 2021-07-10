@@ -1,12 +1,15 @@
 package com.yang.services;
 
 import com.yang.dao.OrderDao;
+import com.yang.dao.ReturnInforDao;
+import com.yang.model.Order;
 import com.yang.model.Order_infor;
 import com.yang.utils.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class OrderInforService {
@@ -40,6 +43,24 @@ public class OrderInforService {
         List<Order_infor> order_inforList = orderDao.selectAllOrders();
         sqlSession.close();
         return order_inforList.size();
+    }
+    public static boolean returnMoney(int oid){
+        boolean flag = false;
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        OrderDao orderDao = sqlSession.getMapper(OrderDao.class);
+        Order order = orderDao.selectOrder(oid);
+        if (order!=null){
+            System.out.println(order);
+            Date date = new Date();
+            SimpleDateFormat sdf =new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
+            order.setBuying_time(date);
+            ReturnInforDao returnInforDao =sqlSession.getMapper(ReturnInforDao.class);
+            returnInforDao.insertReturnInfor(order);
+            orderDao.deleteOrder(oid);
+            flag=true;
+        }
+        sqlSession.commit();
+        return flag;
     }
 
 }

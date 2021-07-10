@@ -11,7 +11,7 @@ public class LeftPanel extends JPanel {
     static JButton btn1 = new JButton("用户订单管理");
     static JButton btn2 = new JButton("电影上映管理");
     static JButton btn3 = new JButton("电影售票中心");
-    static JButton btn4 = new JButton("退款订单中心");
+    static JButton btn4 = new JButton("退款记录查询");
 
     public LeftPanel() {
         init();

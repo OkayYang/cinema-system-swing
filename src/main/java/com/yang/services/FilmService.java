@@ -1,11 +1,14 @@
 package com.yang.services;
 
 import com.yang.dao.FilmDao;
+import com.yang.dao.SchedulDao;
 import com.yang.model.Film;
+import com.yang.model.Schedul_infor;
 import com.yang.utils.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class FilmService {
@@ -32,6 +35,50 @@ public class FilmService {
         sqlSession.close();
 
         return objects;
+    }
+
+    public static String[] selectAllFname(){
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        FilmDao filmDao =sqlSession.getMapper(FilmDao.class);
+        List<Film> filmList =filmDao.selectAllFilms();
+        String[] str= new String[filmList.size()];
+        for (int i = 0; i < filmList.size(); i++) {
+            str[i] = filmList.get(i).getfName();
+        }
+        sqlSession.close();
+        return str;
+    }
+    public static int findFid(String fname){
+        int fid = 11101;
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        FilmDao filmDao =sqlSession.getMapper(FilmDao.class);
+        Film film = filmDao.findFilm(fname);
+        if (film!=null){
+            return film.getFid();
+        }
+        return fid;
+    }
+    public static Boolean addFilm(Film film){
+        boolean flag = false;
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        FilmDao filmDao = sqlSession.getMapper(FilmDao.class);
+        if (filmDao.addFilm(film)!=0){
+            flag = true;
+        }
+        sqlSession.commit();
+        sqlSession.close();
+        return flag;
+    }
+    public static Boolean delFilm(int fid){
+        boolean flag = false;
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        FilmDao filmDao = sqlSession.getMapper(FilmDao.class);
+        if (filmDao.deleteFilm(fid)!=0){
+            flag = true;
+        }
+        sqlSession.commit();
+        sqlSession.close();
+        return flag;
     }
 
 }

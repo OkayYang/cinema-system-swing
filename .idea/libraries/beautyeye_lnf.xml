@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="beautyeye_lnf">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../beautyeye-3.7/dist/beautyeye_lnf.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/beautyeye_lnf.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

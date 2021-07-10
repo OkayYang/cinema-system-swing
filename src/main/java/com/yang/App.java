@@ -21,14 +21,13 @@ public class App
         {
             //TODO exception
         }
+        //登陆界面
         LoginView loginView = new LoginView();
 
-
+        //修改密码界面
         /*Registeration registeration = new Registeration();*/
 
+        //登陆主界面
         /*Home home = new Home();*/
-
-
-
     }
 }

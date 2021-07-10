@@ -1,12 +1,15 @@
 package com.yang.view.film;
 
 import com.yang.services.FilmService;
+import com.yang.view.filmSale.FilmSaleTable;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class FilmTable  extends Panel {
 
@@ -16,22 +19,24 @@ public class FilmTable  extends Panel {
         this.setSize(600,450);
     }
     private void init() {
-        Object[] columnNames = {"电影编号", "电影名", "电影类型", "地区", "放映时间","上映时间","价格"};
-        Object[][] rowData= FilmService.showSchedulInfor();
+        Object[] columnNames = {"电影编号", "电影名", "电影类型", "地区", "放映时长","上映时间","价格"};
+        final Object[][] rowData= FilmService.showSchedulInfor();
         // 创建 表格模型，指定 所有行数据 和 表头
         TableModel tableModel = new DefaultTableModel(rowData, columnNames);
 
         // 使用 表格模型 创建 表格
 
-        JTable table = new JTable(tableModel){
+        final JTable table = new JTable(tableModel){
             //禁止单元格编辑
             public boolean isCellEditable(int row, int column){
                 return false;
             }
         };
         //设置滚动面板
-        table.setPreferredScrollableViewportSize(new Dimension(590, 400));
+        table.setPreferredScrollableViewportSize(new Dimension(590, 350));
         JScrollPane scrollPane = new JScrollPane(table);
+        //设置单一选中
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         table.setShowGrid(true);
         JTableHeader jTableHeader = table.getTableHeader();
@@ -44,6 +49,44 @@ public class FilmTable  extends Panel {
         table.getColumnModel().getColumn(4).setPreferredWidth(110);
         table.getColumnModel().getColumn(5).setPreferredWidth(110);*/
         this.add(scrollPane);
+        table.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount()>=2){
+                    int fid =(int) rowData[table.getSelectedRow()][0];
+
+                    int opt = JOptionPane.showConfirmDialog(FilmTable.this,
+                            "是否删除id为:"+fid+"的电影?", "确认信息",
+                            JOptionPane.YES_NO_OPTION);
+                    if (opt == JOptionPane.YES_OPTION) {
+                        if (FilmService.delFilm(fid)){
+                            JOptionPane.showMessageDialog(FilmTable.this,"删除成功，请刷新！","提示",JOptionPane.PLAIN_MESSAGE);
+                        }else                             JOptionPane.showMessageDialog(FilmTable.this,"退款失败！","提示",JOptionPane.PLAIN_MESSAGE);
+
+                    }
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
 
     }
 }

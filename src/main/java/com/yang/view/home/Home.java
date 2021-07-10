@@ -2,7 +2,7 @@ package com.yang.view.home;
 
 import com.yang.view.film.FilmPage;
 import com.yang.view.filmSale.FilmSalePage;
-import com.yang.view.order.OrderCentralPanelTest;
+import com.yang.view.order.OrderPage;
 import com.yang.view.retrun.ReturnInfor;
 
 import javax.swing.*;
@@ -48,7 +48,7 @@ public class Home extends JFrame {
         splitPane1.setOneTouchExpandable(true);
         splitPane1.setContinuousLayout(true);
         /*splitPane1.setBottomComponent(new OrderCentralPanelTest());*/
-        splitPane1.setBottomComponent(new OrderCentralPanelTest());
+        splitPane1.setBottomComponent(new OrderPage());
         splitPane1.setTopComponent(new TopPanel());
 
         splitPane1.setEnabled(false);
@@ -57,7 +57,7 @@ public class Home extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 splitPane1.setDividerLocation(70);
-                splitPane1.setBottomComponent(new OrderCentralPanelTest());
+                splitPane1.setBottomComponent(new OrderPage());
             }
         });
         btn2.addMouseListener(new MouseClickEvent(){

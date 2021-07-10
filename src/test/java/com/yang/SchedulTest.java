@@ -35,7 +35,6 @@ public class SchedulTest {
         SchedulDao schedulDao = sqlSession.getMapper(SchedulDao.class);
         schedulDao.updateStock(6001);
 
-
         UserDao userDao = sqlSession.getMapper(UserDao.class);
         User user = userDao.selectUser_byName("张三");
         if (user == null) {

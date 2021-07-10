@@ -16,6 +16,9 @@ values(#{sName},#{fid},#{sTime},#{sStock})
     <update id="updateStock">
         update schedule set sstock=sstock-1 where sid = #{sid}
     </update>
+    <delete id="deletesSchedul">
+        delete from schedule where sid = #{sid}
+    </delete>
 
 
 </mapper>
