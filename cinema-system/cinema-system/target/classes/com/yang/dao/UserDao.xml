@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace一般与接口名一致，parameterType单一参数类型,id一般与对应方法一致，resultType与返回类型一致-->
+<mapper namespace="com.yang.dao.UserDao">
+
+    <select id="selectAllUsers" resultType="User">
+    select * from user
+      
+    </select>
+    <select id="selectUser_byId" resultType="User">
+        select * from user 
+        where uid =#{uid}
+    </select>
+    <select id="selectUser_byName" resultType="User">
+        select * from user
+        where uname =#{uname}
+    </select>
+    
+    <insert id="addUser">
+        insert into user(uname,uphone)
+        values (#{uname},#{uPhone})
+    </insert>
+    <delete id="deleteUser">
+        delete from user where uid =#{uid}
+    </delete>
+
+
+</mapper>
+

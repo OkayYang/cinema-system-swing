@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--    类路径的根下找配置文件   %{key}-->
+    <properties resource="MysqlConnection.properties"/>
+
+    <settings>
+        <!--        输出日志-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    <!--    对返回类型定义别名-->
+    <typeAliases>
+
+        <!--        name是包名，包下所有类，类名就是别名，不区分大小写-->
+        <package name="com.yang.model"/>
+    </typeAliases>
+    <!--    default默认执行的环境-->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${mysql.driver}"/>
+                <property name="url" value="${mysql.url}"/>
+                <property name="username" value="${mysql.username}"/>
+                <property name="password" value="${mysql.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+
+        <!--        第二种方式，包名下的xml都加在进去-->
+        <package name="com.yang.dao"/>
+    </mappers>
+</configuration>

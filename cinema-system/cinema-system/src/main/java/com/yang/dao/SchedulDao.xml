@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace一般与接口名一致，parameterType单一参数类型,id一般与对应方法一致，resultType与返回类型一致-->
+<mapper namespace="com.yang.dao.SchedulDao">
+
+    <select id="selectAllScheduls" resultType="Schedul_infor">
+select * from schedul_infor
+      
+    </select>
+    <insert id="addSchedul">
+        insert into schedule(sname,fid,stime,sstock)
+values(#{sName},#{fid},#{sTime},#{sStock})
+    </insert>
+    <update id="updateStock">
+        update schedule set sstock=sstock-1 where sid = #{sid}
+    </update>
+
+
+</mapper>
+
