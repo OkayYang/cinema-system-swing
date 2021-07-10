@@ -36,7 +36,7 @@ public class SchedulService {
                 };
             }
         }
-sqlSession.close();
+        sqlSession.close();
         return objects;
     }
 
@@ -63,11 +63,7 @@ sqlSession.close();
             flag=true;
         }
         sqlSession.close();
-
         return flag;
-
-
-
     }
 
 
@@ -79,7 +75,9 @@ sqlSession.close();
         for (int i = 0; i < schedulInforList.size(); i++) {
             str[i] = ""+schedulInforList.get(i).getSid();
         }
+        sqlSession.close();
         return str;
+
 
     }
 

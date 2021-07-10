@@ -61,9 +61,15 @@ public class FilmSaleTable extends Panel {
                             "是否删除id为:"+sid+"的电影?", "确认信息",
                             JOptionPane.YES_NO_OPTION);
                     if (opt == JOptionPane.YES_OPTION) {
-                        if (SchedulService.delSchedul(sid)){
-                            JOptionPane.showMessageDialog(FilmSaleTable.this,"删除成功，请刷新！","提示",JOptionPane.PLAIN_MESSAGE);
-                        }else                             JOptionPane.showMessageDialog(FilmSaleTable.this,"退款失败！","提示",JOptionPane.PLAIN_MESSAGE);
+                        try{
+                            if (SchedulService.delSchedul(sid)){
+                                JOptionPane.showMessageDialog(FilmSaleTable.this,"删除成功，请刷新！","提示",JOptionPane.PLAIN_MESSAGE);
+                            }else                             JOptionPane.showMessageDialog(FilmSaleTable.this,"退款失败！","提示",JOptionPane.PLAIN_MESSAGE);
+
+                        }catch (Exception e1){
+                            JOptionPane.showMessageDialog(FilmSaleTable.this,"该场次已经售出不可删除！","提示",JOptionPane.PLAIN_MESSAGE);
+
+                        }
 
                     }
                 }

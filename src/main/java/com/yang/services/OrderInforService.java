@@ -60,6 +60,7 @@ public class OrderInforService {
             flag=true;
         }
         sqlSession.commit();
+        sqlSession.close();
         return flag;
     }
 

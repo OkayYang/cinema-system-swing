@@ -53,15 +53,22 @@ public class FilmTable  extends Panel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount()>=2){
+
                     int fid =(int) rowData[table.getSelectedRow()][0];
 
                     int opt = JOptionPane.showConfirmDialog(FilmTable.this,
                             "是否删除id为:"+fid+"的电影?", "确认信息",
                             JOptionPane.YES_NO_OPTION);
                     if (opt == JOptionPane.YES_OPTION) {
-                        if (FilmService.delFilm(fid)){
-                            JOptionPane.showMessageDialog(FilmTable.this,"删除成功，请刷新！","提示",JOptionPane.PLAIN_MESSAGE);
-                        }else                             JOptionPane.showMessageDialog(FilmTable.this,"退款失败！","提示",JOptionPane.PLAIN_MESSAGE);
+                        try {
+                            if (FilmService.delFilm(fid)){
+                                JOptionPane.showMessageDialog(FilmTable.this,"删除成功，请刷新！","提示",JOptionPane.PLAIN_MESSAGE);
+                            }else                             JOptionPane.showMessageDialog(FilmTable.this,"退款失败！","提示",JOptionPane.PLAIN_MESSAGE);
+
+                        }catch (Exception e1){
+                            JOptionPane.showMessageDialog(FilmTable.this,"该电影已有人购买，不可删除！","提示",JOptionPane.PLAIN_MESSAGE);
+
+                        }
 
                     }
                 }
