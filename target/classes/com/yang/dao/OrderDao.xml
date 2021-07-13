@@ -21,6 +21,10 @@
         values (#{order_id},#{user_id},#{schedul_id},#{buying_time})
     </insert>
 
+    <select id="selectOrders" resultType="Order_infor">
+        select * from order_infor where uname = #{uname}
+    </select>
+
 
 </mapper>
 

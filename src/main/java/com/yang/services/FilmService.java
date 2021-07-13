@@ -52,9 +52,10 @@ public class FilmService {
         int fid = 11101;
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         FilmDao filmDao =sqlSession.getMapper(FilmDao.class);
-        Film film = filmDao.findFilm(fname);
-        if (film!=null){
-            return film.getFid();
+        List<Film> film = filmDao.findFilm(fname);
+        Film film1 = film.get(0);
+        if (film1!=null){
+            return film1.getFid();
         }
         return fid;
     }
@@ -80,5 +81,30 @@ public class FilmService {
         sqlSession.close();
         return flag;
     }
+    public static Object[][] findFilm(String fname){
+        Object[][] objects=null;
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        FilmDao filmDao = sqlSession.getMapper(FilmDao.class);
+        List<Film> filmList =filmDao.findFilm(fname);
+        SimpleDateFormat sdf =new SimpleDateFormat("yyy-MM-dd");
+        if (filmList.size()!=0){
+            objects =new Object[filmList.size()][];
+            for (int i = 0; i < filmList.size(); i++) {
+                objects[i] = new Object[]{
+                        filmList.get(i).getFid(),
+                        filmList.get(i).getfName(),
+                        filmList.get(i).getfType(),
+                        filmList.get(i).getfRegion(),
+                        filmList.get(i).getfDuration(),
+                        sdf.format(filmList.get(i).getfDate()),
+                        filmList.get(i).getfPrice()
+                };
+            }
+        }
+        sqlSession.close();
+        return objects;
+    }
+
+
 
 }

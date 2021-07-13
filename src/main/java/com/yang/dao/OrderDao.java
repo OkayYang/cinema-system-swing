@@ -26,4 +26,7 @@ public interface OrderDao {
     int deleteOrder(int order_id);
 
     int addOrder(Order order);
+    List<Order_infor> selectOrders(String uname);
+
+
 }

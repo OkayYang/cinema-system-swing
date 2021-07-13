@@ -140,6 +140,5 @@ public class LoginView extends JFrame{
             }
         });
 
-
     }
 }

@@ -26,7 +26,7 @@ public interface FilmDao {
 
     int addFilm(Film film);
 
-    Film findFilm(String fname);
+    List<Film> findFilm(String fname);
 
 
 

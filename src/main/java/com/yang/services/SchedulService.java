@@ -104,6 +104,29 @@ public class SchedulService {
         sqlSession.close();
         return flag;
     }
+    public static Object[][] findSheduls(String sname){
+        Object[][] objects=null;
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        SchedulDao schedulDao = sqlSession.getMapper(SchedulDao.class);
+        List<Schedul_infor> schedulInforList = schedulDao.findScheduls(sname);
+        SimpleDateFormat sdf =new SimpleDateFormat("yyy-MM-dd HH:mm");
+        if (schedulInforList.size()!=0){
+            objects =new Object[schedulInforList.size()][];
+            for (int i = 0; i < schedulInforList.size(); i++) {
+                objects[i] = new Object[]{
+                        schedulInforList.get(i).getSid(),
+                        schedulInforList.get(i).getsName(),
+                        schedulInforList.get(i).getfName(),
+                        schedulInforList.get(i).getfType(),
+                        schedulInforList.get(i).getfDuration(),
+                        sdf.format(schedulInforList.get(i).getsTime()),
+                        schedulInforList.get(i).getsStock()
+                };
+            }
+        }
+        sqlSession.close();
+        return objects;
+    }
 
 
 

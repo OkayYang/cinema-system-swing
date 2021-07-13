@@ -12,6 +12,7 @@ import java.awt.event.MouseListener;
 
 public class Home extends JFrame {
     private static JLabel label1 =LeftPanel.label1;
+    static JSplitPane splitPane1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);//垂直分割
     private static JButton btn1 = LeftPanel.btn1;
     private static JButton btn2 = LeftPanel.btn2;
     private static JButton btn3 = LeftPanel.btn3;
@@ -41,7 +42,7 @@ public class Home extends JFrame {
         container.add(splitPane,BorderLayout.CENTER);
 
 
-        final JSplitPane splitPane1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);//垂直分割
+
         splitPane1.setDividerLocation(70);
         splitPane1.setDividerSize(10);
         //设置ui小部件
@@ -56,6 +57,10 @@ public class Home extends JFrame {
         btn1.addMouseListener(new MouseClickEvent(){
             @Override
             public void mouseClicked(MouseEvent e) {
+                TopPanel.index=1;
+                TopPanel.jTextField.setForeground(Color.gray);
+                TopPanel.jTextField.setFont(new Font("宋体",Font.PLAIN,12));
+                TopPanel.jTextField.setText("请输入购买人姓名");
                 splitPane1.setDividerLocation(70);
                 splitPane1.setBottomComponent(new OrderPage());
             }
@@ -63,6 +68,10 @@ public class Home extends JFrame {
         btn2.addMouseListener(new MouseClickEvent(){
             @Override
             public void mouseClicked(MouseEvent e) {
+                TopPanel.index=2;
+                TopPanel.jTextField.setForeground(Color.gray);
+                TopPanel.jTextField.setFont(new Font("宋体",Font.PLAIN,12));
+                TopPanel.jTextField.setText("请输入电影名");
                 splitPane1.setDividerLocation(70);
                 splitPane1.setBottomComponent(new FilmPage());
             }
@@ -70,6 +79,10 @@ public class Home extends JFrame {
         btn3.addMouseListener(new MouseClickEvent(){
             @Override
             public void mouseClicked(MouseEvent e) {
+                TopPanel.index=3;
+                TopPanel.jTextField.setForeground(Color.gray);
+                TopPanel.jTextField.setFont(new Font("宋体",Font.PLAIN,12));
+                TopPanel.jTextField.setText("请输入影厅名");
                 splitPane1.setDividerLocation(70);
                 splitPane1.setBottomComponent(new FilmSalePage());
             }
@@ -77,6 +90,10 @@ public class Home extends JFrame {
         btn4.addMouseListener(new MouseClickEvent(){
             @Override
             public void mouseClicked(MouseEvent e) {
+                TopPanel.index=4;
+                TopPanel.jTextField.setForeground(Color.gray);
+                TopPanel.jTextField.setFont(new Font("宋体",Font.PLAIN,12));
+                TopPanel.jTextField.setText("请输入退款人姓名");
                 splitPane1.setDividerLocation(70);
                 splitPane1.setBottomComponent(new ReturnInfor());
             }

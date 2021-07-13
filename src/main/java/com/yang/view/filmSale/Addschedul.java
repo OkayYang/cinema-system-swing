@@ -21,7 +21,7 @@ public class Addschedul extends JPanel{
         Font font = new Font("宋体",Font.PLAIN,22);
 
 
-        JLabel jLabel1 = new JLabel("电影编号:");
+        JLabel jLabel1 = new JLabel("电影名称:");
         JLabel jLabel2 = new JLabel("影厅名称:");
         JLabel jLabel3 = new JLabel("电影票量:");
         JLabel jLabel4 = new JLabel("播放时间:");
@@ -111,15 +111,20 @@ public class Addschedul extends JPanel{
                     if (s[field1.getSelectedIndex()]!=null){
                         stock = Integer.parseInt(field4.getText());
                     }
-                    Schedul schedul = new Schedul();
-                    schedul.setFid(fid);
-                    schedul.setsStock(stock);
-                    schedul.setsName(sname);
-                    schedul.setsTime(date);
-                    if (SchedulService.addSchedul(schedul)){
-                        JOptionPane.showMessageDialog(Addschedul.this,"添加成功！","提示",JOptionPane.PLAIN_MESSAGE);
-                    }else                     JOptionPane.showMessageDialog(Addschedul.this,"添加失败，请返回检查！","提示",JOptionPane.PLAIN_MESSAGE);
+                    if ("".equals(sname)||"".equals(field4.getText())){
+                        JOptionPane.showMessageDialog(Addschedul.this,"输入信息不能为空！","提示",JOptionPane.PLAIN_MESSAGE);
 
+                    }else {
+                        Schedul schedul = new Schedul();
+                        schedul.setFid(fid);
+                        schedul.setsStock(stock);
+                        schedul.setsName(sname);
+                        schedul.setsTime(date);
+                        if (SchedulService.addSchedul(schedul)){
+                            JOptionPane.showMessageDialog(Addschedul.this,"添加成功！","提示",JOptionPane.PLAIN_MESSAGE);
+                        }else                     JOptionPane.showMessageDialog(Addschedul.this,"添加失败，请返回检查！","提示",JOptionPane.PLAIN_MESSAGE);
+
+                    }
 
                 }catch ( Exception ex){
                     JOptionPane.showMessageDialog(Addschedul.this,"输入信息有误，请返回检查！","提示",JOptionPane.PLAIN_MESSAGE);

@@ -14,16 +14,16 @@ import java.util.List;
 public class FilmTest {
     @Test
     public void selectFilmTest(){
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        /*SqlSession sqlSession = MyBatisUtil.getSqlSession();
         FilmDao filmDao = sqlSession.getMapper(FilmDao.class);
         Film film  = filmDao.findFilm("金刚川");
         System.out.println(film);
-        /*List<Film> filmList = filmDao.selectAllFilms();
+        *//*List<Film> filmList = filmDao.selectAllFilms();
         for (Film film:filmList
              ) {
             System.out.println(film);
-        }*/
-        sqlSession.close();
+        }*//*
+        sqlSession.close();*/
     }
     @Test
     public void addFilmTest() throws ParseException {

@@ -12,7 +12,9 @@
     <select id="selectAllReturns" resultType="Return_order_infor">
         select * from return_order_infor
     </select>
-
+    <select id="findReturns" resultType="Return_order_infor">
+        select * from return_order_infor where uname =#{uname}
+    </select>
 
 </mapper>
 

@@ -35,4 +35,28 @@ public class ReturnInforService {
         return objects;
     }
 
+    public static Object[][] findReturnInfor(String uname){
+        Object[][] objects=null;
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        ReturnInforDao returnInforDao =sqlSession.getMapper(ReturnInforDao.class);
+        List<Return_order_infor> returnOrderInfors =returnInforDao.findReturns(uname);
+
+        SimpleDateFormat sdf =new SimpleDateFormat("yyy-MM-dd HH:mm");
+        if (returnOrderInfors.size()!=0){
+            objects =new Object[returnOrderInfors.size()][];
+            for (int i = 0; i < returnOrderInfors.size(); i++) {
+                objects[i] = new Object[]{
+                        returnOrderInfors.get(i).getOid(),
+                        returnOrderInfors.get(i).getUname(),
+                        returnOrderInfors.get(i).getFname(),
+                        returnOrderInfors.get(i).getSname(),
+                        sdf.format(returnOrderInfors.get(i).getStime()),
+                        sdf.format(returnOrderInfors.get(i).getWtime())
+                };
+            }
+        }
+        sqlSession.close();
+        return objects;
+    }
+
 }

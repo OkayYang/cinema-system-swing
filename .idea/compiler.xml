@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="cinema-system" target="1.7" />
+      <module name="cinema-system" target="15.0.2" />
     </bytecodeTargetLevel>
   </component>
 </project>

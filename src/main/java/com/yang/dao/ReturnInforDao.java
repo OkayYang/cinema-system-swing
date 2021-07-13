@@ -14,4 +14,5 @@ public interface ReturnInforDao {
     int insertReturnInfor(Order order);
 
     List<Return_order_infor> selectAllReturns();
+    List<Return_order_infor> findReturns(String uname);
 }

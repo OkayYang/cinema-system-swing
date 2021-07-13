@@ -19,6 +19,10 @@ values(#{sName},#{fid},#{sTime},#{sStock})
     <delete id="deletesSchedul">
         delete from schedule where sid = #{sid}
     </delete>
+    <select id="findScheduls" resultType="Schedul_infor">
+        select * from schedul_infor where sname =#{sname}
+
+    </select>
 
 
 </mapper>

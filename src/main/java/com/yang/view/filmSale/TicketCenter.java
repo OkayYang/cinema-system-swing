@@ -79,7 +79,8 @@ public class TicketCenter extends JPanel {
 
                     if ("".equals(name)||"".equals(phone)){
                         JOptionPane.showMessageDialog(TicketCenter.this,"信息不能为空！","提示",JOptionPane.PLAIN_MESSAGE);
-                    }if (phone.length()<11||phone.length()>11){
+                    }
+                    else if (phone.length()<11||phone.length()>11){
                         JOptionPane.showMessageDialog(TicketCenter.this,"请输入长度为11位的手机号！","提示",JOptionPane.PLAIN_MESSAGE);
                     }
                     else {

@@ -17,8 +17,6 @@ public class AddFilm extends JPanel {
         this.setSize(600,500);
         this.setLayout(null);
         Font font = new Font("宋体",Font.PLAIN,18);
-
-
         JLabel jLabel1 = new JLabel("电影名称:");
         JLabel jLabel2 = new JLabel("电影类型:");
         JLabel jLabel3 = new JLabel("电影价格:");
@@ -93,11 +91,15 @@ public class AddFilm extends JPanel {
                     String durTime = field5.getText();
                     String region = field6.getText();
                     int price = Integer.parseInt(field3.getText());
-                    Film film = new Film(fname,type,region,durTime,date,price);
-                    if (FilmService.addFilm(film)){
-                        JOptionPane.showMessageDialog(AddFilm.this,"添加成功！","提示",JOptionPane.PLAIN_MESSAGE);
-                    }else                     JOptionPane.showMessageDialog(AddFilm.this,"添加失败，请返回检查！","提示",JOptionPane.PLAIN_MESSAGE);
+                    if ("".equals(fname)||"".equals(type)||"".equals(durTime)||"".equals(region)||"".equals(field3.getText())){
+                        JOptionPane.showMessageDialog(AddFilm.this,"添加信息不能为空！","提示",JOptionPane.PLAIN_MESSAGE);
+                    }else {
+                        Film film = new Film(fname,type,region,durTime,date,price);
+                        if (FilmService.addFilm(film)){
+                            JOptionPane.showMessageDialog(AddFilm.this,"添加成功！","提示",JOptionPane.PLAIN_MESSAGE);
+                        }else                     JOptionPane.showMessageDialog(AddFilm.this,"添加失败，请返回检查！","提示",JOptionPane.PLAIN_MESSAGE);
 
+                    }
 
                 }catch (Exception e2){
                     JOptionPane.showMessageDialog(AddFilm.this,"输入信息有误，请返回检查！","提示",JOptionPane.PLAIN_MESSAGE);

@@ -10,4 +10,5 @@ public interface SchedulDao {
     int addSchedul(Schedul schedul);
     int updateStock(int sid);
     int deletesSchedul(int sid);
+    List<Schedul_infor> findScheduls(String sname);
 }
