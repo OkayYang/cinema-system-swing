@@ -1,6 +1,5 @@
-package com.yang.services;
+package com.yang.service.Impl;
 
-import com.yang.dao.FilmDao;
 import com.yang.dao.OrderDao;
 import com.yang.dao.SchedulDao;
 import com.yang.dao.UserDao;
@@ -8,18 +7,25 @@ import com.yang.model.Order;
 import com.yang.model.Schedul;
 import com.yang.model.Schedul_infor;
 import com.yang.model.User;
-import com.yang.utils.MyBatisUtil;
-import org.apache.ibatis.session.SqlSession;
+import com.yang.service.SchedulService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class SchedulService {
-    public static Object[][] showFilmInfor(){
+@Service("schedulService")
+public class SchedulServiceImpl implements SchedulService {
+    @Autowired
+    private SchedulDao schedulDao;
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private OrderDao orderDao;
+    public  Object[][] showFilmInfor(){
         Object[][] objects=null;
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        SchedulDao schedulDao = sqlSession.getMapper(SchedulDao.class);
         List<Schedul_infor> schedulInforList = schedulDao.selectAllScheduls();
         SimpleDateFormat sdf =new SimpleDateFormat("yyy-MM-dd HH:mm");
         if (schedulInforList.size()!=0){
@@ -36,17 +42,16 @@ public class SchedulService {
                 };
             }
         }
-        sqlSession.close();
         return objects;
     }
 
-    public static  Boolean  buyTicket(String name,String phone,int fid){
+    //需要事务
+    @Transactional
+    public   Boolean  buyTicket(String name,String phone,int fid){
         boolean flag = false;
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        SchedulDao schedulDao = sqlSession.getMapper(SchedulDao.class);
+
         schedulDao.updateStock(fid);
 
-        UserDao userDao = sqlSession.getMapper(UserDao.class);
 
         User user = userDao.selectUser_byName(name);
         if (user == null) {
@@ -57,57 +62,43 @@ public class SchedulService {
             user = userDao.selectUser_byName(name);
         }
         Order order = new Order(user.getUid(),fid,new Date());
-        OrderDao orderDao = sqlSession.getMapper(OrderDao.class);
+
         if (orderDao.addOrder(order)!=0){
-            sqlSession.commit();
             flag=true;
         }
-        sqlSession.close();
         return flag;
     }
 
 
-    public static String[] showSid(){
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        SchedulDao schedulDao = sqlSession.getMapper(SchedulDao.class);
+    public  String[] showSid(){
+
         List<Schedul_infor> schedulInforList = schedulDao.selectAllScheduls();
         String[] str= new String[schedulInforList.size()];
         for (int i = 0; i < schedulInforList.size(); i++) {
             str[i] = ""+schedulInforList.get(i).getSid();
         }
-        sqlSession.close();
         return str;
 
 
     }
 
-    public static boolean addSchedul(Schedul schedul){
+    public  boolean addSchedul(Schedul schedul){
         boolean flag = false;
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        SchedulDao schedulDao = sqlSession.getMapper(SchedulDao.class);
         if (schedulDao.addSchedul(schedul) != 0) {
             flag = true;
         }
-        sqlSession.commit();
-        sqlSession.close();
         return flag;
     }
 
-    public static boolean delSchedul(int sid){
+    public  boolean delSchedul(int sid){
         boolean flag = false;
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        SchedulDao schedulDao =sqlSession.getMapper(SchedulDao.class);
         if (schedulDao.deletesSchedul(sid)!=0){
             flag = true;
         }
-        sqlSession.commit();
-        sqlSession.close();
         return flag;
     }
-    public static Object[][] findSheduls(String sname){
+    public  Object[][] findSheduls(String sname){
         Object[][] objects=null;
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        SchedulDao schedulDao = sqlSession.getMapper(SchedulDao.class);
         List<Schedul_infor> schedulInforList = schedulDao.findScheduls(sname);
         SimpleDateFormat sdf =new SimpleDateFormat("yyy-MM-dd HH:mm");
         if (schedulInforList.size()!=0){
@@ -124,7 +115,6 @@ public class SchedulService {
                 };
             }
         }
-        sqlSession.close();
         return objects;
     }
 

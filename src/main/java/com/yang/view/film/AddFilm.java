@@ -2,8 +2,10 @@ package com.yang.view.film;
 
 import com.eltima.components.ui.DatePicker;
 import com.yang.model.Film;
-import com.yang.services.FilmService;
-import com.yang.view.filmSale.TicketCenter;
+import com.yang.service.FilmService;
+import com.yang.service.Impl.FilmServiceImpl;
+import com.yang.utils.SpringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +15,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class AddFilm extends JPanel {
+    private FilmService filmService = (FilmService) SpringUtil.getApplicationContext().getBean("filmService");
     public AddFilm() {
         this.setSize(600,500);
         this.setLayout(null);
@@ -95,7 +98,7 @@ public class AddFilm extends JPanel {
                         JOptionPane.showMessageDialog(AddFilm.this,"添加信息不能为空！","提示",JOptionPane.PLAIN_MESSAGE);
                     }else {
                         Film film = new Film(fname,type,region,durTime,date,price);
-                        if (FilmService.addFilm(film)){
+                        if (filmService.addFilm(film)){
                             JOptionPane.showMessageDialog(AddFilm.this,"添加成功！","提示",JOptionPane.PLAIN_MESSAGE);
                         }else                     JOptionPane.showMessageDialog(AddFilm.this,"添加失败，请返回检查！","提示",JOptionPane.PLAIN_MESSAGE);
 

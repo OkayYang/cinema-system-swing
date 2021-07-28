@@ -1,6 +1,9 @@
 package com.yang.view.order;
 
-import com.yang.services.OrderInforService;
+import com.yang.service.Impl.OrderInforServiceImpl;
+import com.yang.service.OrderInforService;
+import com.yang.utils.SpringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -9,6 +12,7 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 
 public class OrderCentralPanel extends Panel {
+    private OrderInforService orderInforService= (OrderInforService) SpringUtil.getApplicationContext().getBean("orderInforService");
     public OrderCentralPanel() {
         init();
         /*this.setBounds(220,90,600,500);*/
@@ -19,7 +23,7 @@ public class OrderCentralPanel extends Panel {
         Object[] columnNames = {"订单号", "用户姓名", "电影名", "放映厅", "放映时间","购买时间"};
 
         // 表格所有行数据
-        Object[][] rowData = OrderInforService.showOrderInfor();
+        Object[][] rowData = orderInforService.showOrderInfor();
 
         // 创建 表格模型，指定 所有行数据 和 表头
         TableModel tableModel = new DefaultTableModel(rowData, columnNames);

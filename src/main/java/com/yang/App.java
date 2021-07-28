@@ -3,6 +3,8 @@ package com.yang;
 import com.yang.view.home.Home;
 import com.yang.view.login.LoginView;
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Hello world!
@@ -21,6 +23,7 @@ public class App
         {
             //TODO exception
         }
+
         //登陆界面
         LoginView loginView = new LoginView();
 

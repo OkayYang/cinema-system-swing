@@ -1,10 +1,10 @@
 package com.yang.view.filmSale;
 
-import com.yang.services.FilmService;
-import com.yang.services.OrderInforService;
-import com.yang.services.SchedulService;
-import com.yang.view.film.FilmTable;
-import com.yang.view.order.ReturnMoney2;
+import com.yang.service.FilmService;
+import com.yang.service.Impl.SchedulServiceImpl;
+import com.yang.service.SchedulService;
+import com.yang.utils.SpringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,6 +15,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class FilmSaleTable extends Panel {
+
+    private SchedulService schedulService =(SchedulService) SpringUtil.getApplicationContext().getBean("schedulService");
     public FilmSaleTable() {
         init();
         /*this.setBounds(220,90,600,500);*/
@@ -22,7 +24,7 @@ public class FilmSaleTable extends Panel {
     }
     private void init() {
         Object[] columnNames = {"场次编号", "影厅名", "电影名", "题材", "时长","播放时间","库存"};
-        final Object[][] rowData= SchedulService.showFilmInfor();
+        final Object[][] rowData= schedulService.showFilmInfor();
         // 创建 表格模型，指定 所有行数据 和 表头
         TableModel tableModel = new DefaultTableModel(rowData, columnNames);
 
@@ -62,7 +64,7 @@ public class FilmSaleTable extends Panel {
                             JOptionPane.YES_NO_OPTION);
                     if (opt == JOptionPane.YES_OPTION) {
                         try{
-                            if (SchedulService.delSchedul(sid)){
+                            if (schedulService.delSchedul(sid)){
                                 JOptionPane.showMessageDialog(FilmSaleTable.this,"删除成功，请刷新！","提示",JOptionPane.PLAIN_MESSAGE);
                             }else                             JOptionPane.showMessageDialog(FilmSaleTable.this,"退款失败！","提示",JOptionPane.PLAIN_MESSAGE);
 

@@ -1,10 +1,12 @@
 package com.yang;
 
+import com.yang.dao.SchedulDao;
 import com.yang.dao.UserDao;
 import com.yang.model.User;
-import com.yang.utils.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 
@@ -14,8 +16,8 @@ public class UserTest {
      */
     @Test
     public void selectAllUsers(){
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        UserDao userDao = (UserDao)applicationContext.getBean("userDao");
         List<User> userList = userDao.selectAllUsers();
         for (User user:userList
              ) {
@@ -28,8 +30,8 @@ public class UserTest {
      */
     @Test
     public void selectUser(){
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        UserDao userDao = (UserDao)applicationContext.getBean("userDao");
         User user = userDao.selectUser_byId(5001);
         System.out.println(user);
         user =userDao.selectUser_byName("华晨宇");
@@ -39,6 +41,6 @@ public class UserTest {
         user.setuPhone("1765552457");
         int success = userDao.addUser(user);
         System.out.println("成功插入"+success+"条数据!");
-        sqlSession.commit();
+
     }
 }

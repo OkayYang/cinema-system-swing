@@ -1,6 +1,10 @@
 package com.yang.view.login;
 
-import com.yang.services.LoginService;
+import com.yang.service.Impl.LoginServiceImpl;
+import com.yang.service.LoginService;
+import com.yang.service.SchedulService;
+import com.yang.utils.SpringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +14,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class  ForgetPassWord extends Dialog {
+
+    private LoginService loginService=(LoginService) SpringUtil.getApplicationContext().getBean("loginService");
 
 
     JLabel  lName,  lPasswd, lConPasswd;
@@ -88,7 +94,7 @@ public class  ForgetPassWord extends Dialog {
                 else if (!password.equals(repassword)){
                     JOptionPane.showMessageDialog(ForgetPassWord.this,"两次输入密码不一致！","提示",JOptionPane.PLAIN_MESSAGE);
                 }else {
-                    if (LoginService.updateAdmin(name,password)){
+                    if (loginService.updateAdmin(name,password)){
                         JOptionPane.showMessageDialog(ForgetPassWord.this,"修改成功即将跳转！","提示",JOptionPane.PLAIN_MESSAGE);
                         ForgetPassWord.this.dispose();
                     }else JOptionPane.showMessageDialog(ForgetPassWord.this,"用户名不存在，请重试！","提示",JOptionPane.PLAIN_MESSAGE);

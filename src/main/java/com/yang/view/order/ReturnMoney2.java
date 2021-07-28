@@ -1,7 +1,9 @@
 package com.yang.view.order;
 
-import com.yang.services.OrderInforService;
-import com.yang.view.login.LoginView;
+import com.yang.service.Impl.OrderInforServiceImpl;
+import com.yang.service.OrderInforService;
+import com.yang.utils.SpringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,6 +14,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class ReturnMoney2 extends Panel {
+
+    private OrderInforService orderInforService= (OrderInforService) SpringUtil.getApplicationContext().getBean("orderInforService");
     public ReturnMoney2() {
         init();
         /*this.setBounds(0,100,600,450);*/
@@ -28,7 +32,7 @@ public class ReturnMoney2 extends Panel {
         Object[] columnNames = {"订单号", "用户姓名", "电影名", "放映厅", "放映时间","购买时间"};
 
         // 表格所有行数据
-        final Object[][] rowData = OrderInforService.showOrderInfor();
+        final Object[][] rowData = orderInforService.showOrderInfor();
 
         // 创建 表格模型，指定 所有行数据 和 表头
         TableModel tableModel = new DefaultTableModel(rowData, columnNames);
@@ -68,7 +72,7 @@ public class ReturnMoney2 extends Panel {
                             "是否确认退款该订单:"+oid+"?", "确认信息",
                             JOptionPane.YES_NO_OPTION);
                     if (opt == JOptionPane.YES_OPTION) {
-                        if (OrderInforService.returnMoney(oid)){
+                        if (orderInforService.returnMoney(oid)){
                             JOptionPane.showMessageDialog(ReturnMoney2.this,"退款成功，请刷新！","提示",JOptionPane.PLAIN_MESSAGE);
                         }else                             JOptionPane.showMessageDialog(ReturnMoney2.this,"退款失败！","提示",JOptionPane.PLAIN_MESSAGE);
 

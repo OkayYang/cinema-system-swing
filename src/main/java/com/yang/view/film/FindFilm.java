@@ -1,7 +1,9 @@
 package com.yang.view.film;
 
-import com.yang.services.FilmService;
-import com.yang.services.OrderInforService;
+import com.yang.service.FilmService;
+import com.yang.service.Impl.FilmServiceImpl;
+import com.yang.utils.SpringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,6 +12,9 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 
 public class FindFilm extends JPanel {
+
+
+    private FilmService filmService=(FilmService) SpringUtil.getApplicationContext().getBean("filmService");
     public FindFilm(String fname) {
         init(fname);
         /*this.setBounds(220,90,600,500);*/
@@ -26,7 +31,7 @@ public class FindFilm extends JPanel {
         Object[] columnNames = {"电影编号", "电影名", "电影类型", "地区", "放映时长","上映时间","价格"};
 
         // 表格所有行数据
-        Object[][] rowData = FilmService.findFilm(fname);
+        Object[][] rowData = filmService.findFilm(fname);
 
         // 创建 表格模型，指定 所有行数据 和 表头
         TableModel tableModel = new DefaultTableModel(rowData, columnNames);

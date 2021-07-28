@@ -1,22 +1,29 @@
-package com.yang.services;
+package com.yang.service.Impl;
 
 import com.yang.dao.OrderDao;
 import com.yang.dao.ReturnInforDao;
 import com.yang.model.Order;
 import com.yang.model.Order_infor;
-import com.yang.utils.MyBatisUtil;
+import com.yang.service.OrderInforService;
+
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class OrderInforService {
-    public static Object[][] showOrderInfor(){
+@Service("orderInforService")
+public class OrderInforServiceImpl implements OrderInforService {
+    @Autowired
+    private OrderDao orderDao;
+    @Autowired
+    private ReturnInforDao returnInforDao;
+    public Object[][] showOrderInfor(){
         Object[][] objects=null;
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        OrderDao orderDao = sqlSession.getMapper(OrderDao.class);
         List<Order_infor> order_inforList = orderDao.selectAllOrders();
         SimpleDateFormat sdf =new SimpleDateFormat("yyy-MM-dd HH:mm");
         if (order_inforList.size()!=0){
@@ -33,40 +40,32 @@ public class OrderInforService {
                 };
             }
         }
-        sqlSession.close();
 
         return objects;
     }
-    public static int getInfornum(){
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        OrderDao orderDao = sqlSession.getMapper(OrderDao.class);
+    public  int getInfornum(){
+
         List<Order_infor> order_inforList = orderDao.selectAllOrders();
-        sqlSession.close();
         return order_inforList.size();
     }
-    public static boolean returnMoney(int oid){
+    //需要添加事务功能
+    @Transactional
+    public  boolean returnMoney(int oid){
         boolean flag = false;
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        OrderDao orderDao = sqlSession.getMapper(OrderDao.class);
         Order order = orderDao.selectOrder(oid);
         if (order!=null){
             System.out.println(order);
             Date date = new Date();
             SimpleDateFormat sdf =new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
             order.setBuying_time(date);
-            ReturnInforDao returnInforDao =sqlSession.getMapper(ReturnInforDao.class);
             returnInforDao.insertReturnInfor(order);
             orderDao.deleteOrder(oid);
             flag=true;
         }
-        sqlSession.commit();
-        sqlSession.close();
         return flag;
     }
-    public static Object[][] findOrder(String uname){
+    public  Object[][] findOrder(String uname){
         Object[][] objects=null;
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        OrderDao orderDao = sqlSession.getMapper(OrderDao.class);
         List<Order_infor> order_inforList = orderDao.selectOrders(uname);
         SimpleDateFormat sdf =new SimpleDateFormat("yyy-MM-dd HH:mm");
         if (order_inforList.size()!=0){
@@ -82,7 +81,6 @@ public class OrderInforService {
                 };
             }
         }
-        sqlSession.close();
         return objects;
     }
 

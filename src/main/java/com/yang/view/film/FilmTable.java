@@ -1,7 +1,9 @@
 package com.yang.view.film;
 
-import com.yang.services.FilmService;
-import com.yang.view.filmSale.FilmSaleTable;
+import com.yang.service.FilmService;
+import com.yang.service.Impl.FilmServiceImpl;
+import com.yang.utils.SpringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,6 +15,8 @@ import java.awt.event.MouseListener;
 
 public class FilmTable  extends Panel {
 
+    private FilmService filmService=(FilmService) SpringUtil.getApplicationContext().getBean("filmService");
+
     public FilmTable() {
         init();
         /*this.setBounds(220,90,600,500);*/
@@ -20,7 +24,7 @@ public class FilmTable  extends Panel {
     }
     private void init() {
         Object[] columnNames = {"电影编号", "电影名", "电影类型", "地区", "放映时长","上映时间","价格"};
-        final Object[][] rowData= FilmService.showSchedulInfor();
+        final Object[][] rowData= filmService.showSchedulInfor();
         // 创建 表格模型，指定 所有行数据 和 表头
         TableModel tableModel = new DefaultTableModel(rowData, columnNames);
 
@@ -61,7 +65,7 @@ public class FilmTable  extends Panel {
                             JOptionPane.YES_NO_OPTION);
                     if (opt == JOptionPane.YES_OPTION) {
                         try {
-                            if (FilmService.delFilm(fid)){
+                            if (filmService.delFilm(fid)){
                                 JOptionPane.showMessageDialog(FilmTable.this,"删除成功，请刷新！","提示",JOptionPane.PLAIN_MESSAGE);
                             }else                             JOptionPane.showMessageDialog(FilmTable.this,"退款失败！","提示",JOptionPane.PLAIN_MESSAGE);
 

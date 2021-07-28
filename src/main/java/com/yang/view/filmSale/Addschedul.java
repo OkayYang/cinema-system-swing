@@ -1,11 +1,13 @@
 package com.yang.view.filmSale;
 
 import com.eltima.components.ui.DatePicker;
-import com.yang.model.Film;
 import com.yang.model.Schedul;
-import com.yang.services.FilmService;
-import com.yang.services.SchedulService;
-import com.yang.view.login.LoginView;
+import com.yang.service.FilmService;
+import com.yang.service.Impl.FilmServiceImpl;
+import com.yang.service.Impl.SchedulServiceImpl;
+import com.yang.service.SchedulService;
+import com.yang.utils.SpringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +17,9 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Addschedul extends JPanel{
+
+    private FilmService filmService=(FilmService) SpringUtil.getApplicationContext().getBean("filmService");
+    private SchedulService schedulService=(SchedulService) SpringUtil.getApplicationContext().getBean("schedulService");
     public Addschedul() {
         this.setSize(600,500);
         this.setLayout(null);
@@ -28,7 +33,7 @@ public class Addschedul extends JPanel{
         JButton button1 = new JButton("add");
         JButton button2 = new JButton("clear");
 
-        final String[] s = FilmService.selectAllFname();
+        final String[] s = filmService.selectAllFname();
         final JComboBox field1 = new JComboBox(s);
 
         final JTextField field2 = new JTextField();
@@ -105,7 +110,7 @@ public class Addschedul extends JPanel{
             public void mouseClicked(MouseEvent e) {
                 try {
                     int stock =0;
-                    int fid = FilmService.findFid(s[field1.getSelectedIndex()]);
+                    int fid = filmService.findFid(s[field1.getSelectedIndex()]);
                     String sname = field2.getText();
                     Date date = (Date) field3.getValue();
                     if (s[field1.getSelectedIndex()]!=null){
@@ -120,7 +125,7 @@ public class Addschedul extends JPanel{
                         schedul.setsStock(stock);
                         schedul.setsName(sname);
                         schedul.setsTime(date);
-                        if (SchedulService.addSchedul(schedul)){
+                        if (schedulService.addSchedul(schedul)){
                             JOptionPane.showMessageDialog(Addschedul.this,"添加成功！","提示",JOptionPane.PLAIN_MESSAGE);
                         }else                     JOptionPane.showMessageDialog(Addschedul.this,"添加失败，请返回检查！","提示",JOptionPane.PLAIN_MESSAGE);
 

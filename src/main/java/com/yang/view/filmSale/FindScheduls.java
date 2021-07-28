@@ -1,7 +1,9 @@
 package com.yang.view.filmSale;
 
-import com.yang.services.OrderInforService;
-import com.yang.services.SchedulService;
+import com.yang.service.Impl.SchedulServiceImpl;
+import com.yang.service.SchedulService;
+import com.yang.utils.SpringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,6 +12,8 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 
 public class FindScheduls extends JPanel {
+
+    private SchedulService schedulService=(SchedulService) SpringUtil.getApplicationContext().getBean("schedulService");
     public FindScheduls(String uname) {
         init(uname);
         /*this.setBounds(220,90,600,500);*/
@@ -26,7 +30,7 @@ public class FindScheduls extends JPanel {
         Object[] columnNames = {"场次编号", "影厅名", "电影名", "题材", "时长","播放时间","库存"};
 
         // 表格所有行数据
-        Object[][] rowData = SchedulService.findSheduls(sname);
+        Object[][] rowData = schedulService.findSheduls(sname);
 
         // 创建 表格模型，指定 所有行数据 和 表头
         TableModel tableModel = new DefaultTableModel(rowData, columnNames);

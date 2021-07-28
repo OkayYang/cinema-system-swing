@@ -1,7 +1,10 @@
 package com.yang.view.retrun;
 
-import com.yang.services.OrderInforService;
-import com.yang.services.ReturnInforService;
+import com.yang.service.Impl.ReturnInforServiceImpl;
+import com.yang.service.OrderInforService;
+import com.yang.service.ReturnInforService;
+import com.yang.utils.SpringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,6 +13,8 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 
 public class FindReturnInfor extends JPanel {
+
+    private ReturnInforService returnInforService= (ReturnInforService) SpringUtil.getApplicationContext().getBean("returnInforService");
     public FindReturnInfor(String uname) {
         init(uname);
         /*this.setBounds(220,90,600,500);*/
@@ -26,7 +31,7 @@ public class FindReturnInfor extends JPanel {
         Object[] columnNames = {"订单号", "用户姓名", "电影名", "放映厅", "放映时间","退款时间"};
 
         // 表格所有行数据
-        Object[][] rowData = ReturnInforService.findReturnInfor(uname);
+        Object[][] rowData = returnInforService.findReturnInfor(uname);
 
         // 创建 表格模型，指定 所有行数据 和 表头
         TableModel tableModel = new DefaultTableModel(rowData, columnNames);

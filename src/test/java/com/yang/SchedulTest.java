@@ -7,9 +7,10 @@ import com.yang.model.Order;
 import com.yang.model.Schedul;
 import com.yang.model.Schedul_infor;
 import com.yang.model.User;
-import com.yang.utils.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Date;
 import java.util.List;
@@ -17,8 +18,8 @@ import java.util.List;
 public class SchedulTest {
     @Test
     public void schedulTest(){
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        SchedulDao schedulDao = sqlSession.getMapper(SchedulDao.class);
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        SchedulDao schedulDao = (SchedulDao)applicationContext.getBean("schedulDao");
         List<Schedul_infor> schedulInforList = schedulDao.selectAllScheduls();
         for (Schedul_infor schedulInfor: schedulInforList
              ) {
@@ -26,16 +27,15 @@ public class SchedulTest {
         }
         Schedul schedul = new Schedul("IMAX3D-1号厅",11107,new Date(),60);
         schedulDao.addSchedul(schedul);
-        sqlSession.commit();
-        sqlSession.close();
+
     }
     @Test
     public void buySchedule(){
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        SchedulDao schedulDao = sqlSession.getMapper(SchedulDao.class);
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        SchedulDao schedulDao = (SchedulDao)applicationContext.getBean("schedulDao");
         schedulDao.updateStock(6001);
 
-        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        UserDao userDao =(UserDao)applicationContext.getBean("userDao");
         User user = userDao.selectUser_byName("张三");
         if (user == null) {
             user = new User();
@@ -45,9 +45,8 @@ public class SchedulTest {
             user = userDao.selectUser_byName("张三");
         }
         Order order = new Order(user.getUid(),6001,new Date());
-        OrderDao orderDao = sqlSession.getMapper(OrderDao.class);
+        OrderDao orderDao = (OrderDao)applicationContext.getBean("orderDao");
         orderDao.addOrder(order);
-        sqlSession.commit();
         System.out.println("购票成功!");
     }
 }

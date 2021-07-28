@@ -13,8 +13,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>15.0.2</maven.compiler.source>
-    <maven.compiler.target>15.0.2</maven.compiler.target>
+    <maven.compiler.source>11.0.11</maven.compiler.source>
+    <maven.compiler.target>11.0.11</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -35,6 +35,36 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>8.0.24</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>5.3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>5.3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis-spring</artifactId>
+      <version>2.0.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+      <version>5.3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>5.3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>1.1.10</version>
+    </dependency>
 
   </dependencies>
 
@@ -50,7 +80,5 @@
         <filtering>false</filtering>
       </resource>
     </resources>
-
-
   </build>
 </project>

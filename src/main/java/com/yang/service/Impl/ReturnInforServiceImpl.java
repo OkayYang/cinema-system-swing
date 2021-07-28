@@ -1,20 +1,21 @@
-package com.yang.services;
+package com.yang.service.Impl;
 
-import com.yang.dao.OrderDao;
 import com.yang.dao.ReturnInforDao;
-import com.yang.model.Order_infor;
 import com.yang.model.Return_order_infor;
-import com.yang.utils.MyBatisUtil;
+import com.yang.service.ReturnInforService;
+
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
-
-public class ReturnInforService {
-    public static Object[][] showReturnInfor(){
+@Service("returnInforService")
+public class ReturnInforServiceImpl implements ReturnInforService {
+    @Autowired
+    private ReturnInforDao returnInforDao;
+    public Object[][] showReturnInfor(){
         Object[][] objects=null;
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        ReturnInforDao returnInforDao =sqlSession.getMapper(ReturnInforDao.class);
         List<Return_order_infor> returnOrderInfors =returnInforDao.selectAllReturns();
 
         SimpleDateFormat sdf =new SimpleDateFormat("yyy-MM-dd HH:mm");
@@ -31,14 +32,11 @@ public class ReturnInforService {
                 };
             }
         }
-        sqlSession.close();
         return objects;
     }
 
-    public static Object[][] findReturnInfor(String uname){
+    public  Object[][] findReturnInfor(String uname){
         Object[][] objects=null;
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        ReturnInforDao returnInforDao =sqlSession.getMapper(ReturnInforDao.class);
         List<Return_order_infor> returnOrderInfors =returnInforDao.findReturns(uname);
 
         SimpleDateFormat sdf =new SimpleDateFormat("yyy-MM-dd HH:mm");
@@ -55,7 +53,6 @@ public class ReturnInforService {
                 };
             }
         }
-        sqlSession.close();
         return objects;
     }
 

@@ -1,21 +1,21 @@
-package com.yang.services;
+package com.yang.service.Impl;
 
 import com.yang.dao.FilmDao;
-import com.yang.dao.SchedulDao;
 import com.yang.model.Film;
-import com.yang.model.Schedul_infor;
-import com.yang.utils.MyBatisUtil;
+import com.yang.service.FilmService;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-public class FilmService {
-    public static Object[][] showSchedulInfor(){
+@Service("filmService")
+public class FilmServiceImpl implements FilmService {
+    @Autowired
+    private FilmDao filmDao;
+    public  Object[][] showSchedulInfor(){
         Object[][] objects=null;
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        FilmDao filmDao = sqlSession.getMapper(FilmDao.class);
         List<Film> filmList =filmDao.selectAllFilms();
         SimpleDateFormat sdf =new SimpleDateFormat("yyy-MM-dd");
         if (filmList.size()!=0){
@@ -32,26 +32,20 @@ public class FilmService {
                 };
             }
         }
-        sqlSession.close();
-
         return objects;
     }
 
-    public static String[] selectAllFname(){
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        FilmDao filmDao =sqlSession.getMapper(FilmDao.class);
+    public  String[] selectAllFname(){
+
         List<Film> filmList =filmDao.selectAllFilms();
         String[] str= new String[filmList.size()];
         for (int i = 0; i < filmList.size(); i++) {
             str[i] = filmList.get(i).getfName();
         }
-        sqlSession.close();
         return str;
     }
-    public static int findFid(String fname){
+    public  int findFid(String fname){
         int fid = 11101;
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        FilmDao filmDao =sqlSession.getMapper(FilmDao.class);
         List<Film> film = filmDao.findFilm(fname);
         Film film1 = film.get(0);
         if (film1!=null){
@@ -59,32 +53,24 @@ public class FilmService {
         }
         return fid;
     }
-    public static Boolean addFilm(Film film){
+    public  Boolean addFilm(Film film){
         boolean flag = false;
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        FilmDao filmDao = sqlSession.getMapper(FilmDao.class);
+
         if (filmDao.addFilm(film)!=0){
             flag = true;
         }
-        sqlSession.commit();
-        sqlSession.close();
         return flag;
     }
-    public static Boolean delFilm(int fid){
+    public  Boolean delFilm(int fid){
         boolean flag = false;
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        FilmDao filmDao = sqlSession.getMapper(FilmDao.class);
         if (filmDao.deleteFilm(fid)!=0){
             flag = true;
         }
-        sqlSession.commit();
-        sqlSession.close();
         return flag;
     }
-    public static Object[][] findFilm(String fname){
+    public  Object[][] findFilm(String fname){
         Object[][] objects=null;
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        FilmDao filmDao = sqlSession.getMapper(FilmDao.class);
+
         List<Film> filmList =filmDao.findFilm(fname);
         SimpleDateFormat sdf =new SimpleDateFormat("yyy-MM-dd");
         if (filmList.size()!=0){
@@ -101,7 +87,7 @@ public class FilmService {
                 };
             }
         }
-        sqlSession.close();
+
         return objects;
     }
 

@@ -1,29 +1,24 @@
 package com.yang.view.filmSale;
 
-import com.yang.dao.OrderDao;
-import com.yang.dao.SchedulDao;
-import com.yang.dao.UserDao;
-import com.yang.model.Order;
-import com.yang.model.User;
-import com.yang.services.SchedulService;
-import com.yang.utils.MyBatisUtil;
-import com.yang.view.login.LoginView;
-import org.apache.ibatis.session.SqlSession;
+import com.yang.service.Impl.SchedulServiceImpl;
+import com.yang.service.SchedulService;
+import com.yang.utils.SpringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Date;
 
 public class TicketCenter extends JPanel {
+    private SchedulService schedulService=(SchedulService) SpringUtil.getApplicationContext().getBean("schedulService");
     public TicketCenter() {
         this.setSize(600,500);
         this.setLayout(null);
         Font font = new Font("宋体",Font.PLAIN,22);
         Font font1 = new Font("宋体",Font.PLAIN,15);
 
-        final String[] s = SchedulService.showSid();
+        final String[] s = schedulService.showSid();
         final JComboBox jComboBox = new JComboBox(s);
         jComboBox.setBounds(130,230,100,30);
         jComboBox.setFont(font1);
@@ -84,7 +79,7 @@ public class TicketCenter extends JPanel {
                         JOptionPane.showMessageDialog(TicketCenter.this,"请输入长度为11位的手机号！","提示",JOptionPane.PLAIN_MESSAGE);
                     }
                     else {
-                        SchedulService.buyTicket(name,phone,fid);
+                        schedulService.buyTicket(name,phone,fid);
                         JOptionPane.showMessageDialog(TicketCenter.this,"添加成功！","提示",JOptionPane.PLAIN_MESSAGE);
                     }
 

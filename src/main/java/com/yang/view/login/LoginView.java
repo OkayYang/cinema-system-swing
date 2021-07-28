@@ -1,7 +1,11 @@
 package com.yang.view.login;
 
-import com.yang.services.LoginService;
+import com.yang.service.Impl.LoginServiceImpl;
+import com.yang.service.LoginService;
+import com.yang.utils.SpringUtil;
 import com.yang.view.home.Home;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +13,7 @@ import java.awt.event.*;
 import java.util.Objects;
 
 public class LoginView extends JFrame{
+    private LoginService loginService = (LoginService) SpringUtil.getApplicationContext().getBean("loginService");
     private static JLabel fpd = new JLabel("忘记密码");
     private static JButton btn1 = new JButton("登入");
     private static JPasswordField jpf = new JPasswordField(25);
@@ -22,8 +27,6 @@ public class LoginView extends JFrame{
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
-
 
     }
 
@@ -109,7 +112,7 @@ public class LoginView extends JFrame{
                     JOptionPane.showMessageDialog(LoginView.super.getContentPane(),"账号密码不能为空！","提示",JOptionPane.PLAIN_MESSAGE);
                 }else{
 
-                    if (LoginService.adminLogin(name,password)){
+                    if (loginService.adminLogin(name,password)){
                         //JOptionPane.showMessageDialog(LoginView.super.getContentPane(),"登陆成功！","提示",JOptionPane.PLAIN_MESSAGE);
                         new Home();
                         LoginView.this.dispose();
